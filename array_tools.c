@@ -1,4 +1,4 @@
-#include "array_utilities.h"
+#include "array_tools.h"
 
 void print_int_array(int array[], size_t n) {
 	for (int i = 0; i < n; ++i) {
@@ -58,4 +58,87 @@ int new_rank(int array[], size_t n, int value) {
 	}
 
 	return lower + 1;
+}
+
+void insertion_sort(int array[], size_t n) {
+	int i, key, j;
+	for (i = 1; i < n; ++i)
+	{
+	   key = array[i];
+	   j = i-1;
+
+	   while (j >= 0 && array[j] > key)
+	   {
+	       array[j+1] = array[j];
+	       j = j-1;
+	   }
+	   array[j+1] = key;
+	}
+}
+
+int select_rank(int k, int array[], size_t n, bool forceLinear) {
+	if (n <= 0 || k < 0 || k >= n) {
+		return INT_MAX;
+	}
+
+	int s1[n], s2[n], s3[n], m;
+	size_t s1_size = 0, s2_size = 0, s3_size = 0;
+
+	if (forceLinear) {
+		int ds = 5;
+		size_t divisionsCount = 1 + (int) ((n - 1) / ds);
+		size_t finalDivisionSize = ((n % ds) == 0 ? ds : (n % ds));
+		int M[divisionsCount];
+		int division[ds];
+		
+		for (int i = 0; i < divisionsCount - 1; ++i) {
+			for (int j = 0; j < ds; ++j) {
+				division[j] = array[ds * i + j];
+			}
+
+			insertion_sort(division, ds);
+
+			M[i] = division[((int) ((ds + 1) / 2)) - 1];
+		}
+
+		for (int j = 0; j < finalDivisionSize; ++j) {
+			division[j] = array[5 * (divisionsCount - 1) + j];
+		}
+
+		insertion_sort(division, finalDivisionSize);
+
+		M[divisionsCount - 1] = division[((int) ((finalDivisionSize + 1) / 2)) - 1];
+		
+		if (divisionsCount <= 1) {
+			m = M[0];
+		}
+		else {
+			m = select_rank(((int) ((divisionsCount + 1) / 2)) - 1, M, divisionsCount, true);
+		}
+	}
+	else {
+		m = array[(int) (rand() * n / RAND_MAX)];
+	}
+
+	for (int i = 0; i < n; ++i) {
+		if (array[i] < m) {
+			s1[s1_size++] = array[i];
+		}
+		else if (array[i] == m) {
+			s2[s2_size++] = array[i];
+		}
+		else if (array[i] > m) {
+			s3[s3_size++] = array[i];
+		}
+	}
+
+	if (s1_size > k) {
+		return select_rank(k, s1, s1_size, forceLinear);
+	}
+	else if (s1_size + s2_size > k) {
+		return m;
+	}
+	else {
+		return select_rank(k - s1_size - s2_size, s3, s3_size, forceLinear);
+	}
 }

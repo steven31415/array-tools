@@ -61,5 +61,24 @@ Find the index of an ordered array  at which a a new integer should be inserted 
 **Returns** An integer representing the index at which `value` should be inserted to maintain numerical ordering in `array`
 
 
+### `void insertion_sort(int array[], size_t n)`
+
+Sort an array in place using the insertion sort method
+
+* `array` is an array of integers
+* `n` is the size of `array`
+
+
+### `int select_rank(int k, int array[], size_t n, bool forceLinear)`
+
+Select the element from an integer array with a specific numerical rank. `0` is the minimum value, rank `n-1` is the maximum value.
+
+* `k` is the numerical rank
+* `array` is an array of integers
+* `n` is the size of `array`
+* `forceLinear` is a boolean that specifies the algorithm used. It runs a guaranteed linear algorithm if `true`, a worst-case linear algorithm if `false`. In practice, a setting of `false` will result in a faster result
+
+**Returns** An integer value from `array` with the specified rank `k`
+
 # Credits
 (c) 2016 Steven Watts
