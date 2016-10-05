@@ -1,6 +1,8 @@
 #ifndef ARRAY_UTILITIES_H_
 #define ARRAY_UTILITIES_H_
 
+#include <stdio.h>
+#include <stdlib.h>
 #include <sys/time.h>
 
 // Print out a given array of integers
