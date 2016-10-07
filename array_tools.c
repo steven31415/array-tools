@@ -81,7 +81,7 @@ int select_rank(int k, int array[], size_t n, bool forceLinear) {
 		return INT_MAX;
 	}
 
-	int s1[n], s2[n], s3[n], m;
+	int s1[n], s3[n], m;
 	size_t s1_size = 0, s2_size = 0, s3_size = 0;
 
 	if (forceLinear) {
@@ -125,7 +125,7 @@ int select_rank(int k, int array[], size_t n, bool forceLinear) {
 			s1[s1_size++] = array[i];
 		}
 		else if (array[i] == m) {
-			s2[s2_size++] = array[i];
+			s2_size++;
 		}
 		else if (array[i] > m) {
 			s3[s3_size++] = array[i];
