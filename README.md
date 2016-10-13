@@ -1,4 +1,4 @@
-array-utils
+array-tools
 ===================
 Collection of utility functions operating on arrays, written in C
 
